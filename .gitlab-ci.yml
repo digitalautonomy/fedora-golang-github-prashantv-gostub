@@ -1,0 +1,17 @@
+build:
+  stage: build
+  image: rbonifaz/wahay-rpm-build:latest
+  before_script:
+    - "eval $(ssh-agent -s)"
+    - 'ssh-add <(echo "$FEDORA_PACKAGING_PRIVATE_KEY")'
+    - mkdir -p ~/.ssh; chmod 700 ~/.ssh
+    - 'echo -e "[fedora.autonomia.digital]:4243,[185.108.78.22]:4243 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFE8IPu1LfB0ePyhgBFTyzXRNBZUiYa1ZaSnkFb746r3MgZQlfMhfxdMtrY3bKoiQ4i+HEUTCUN4BJ5n2PMdGz4=" > ~/.ssh/known_hosts'
+    - chmod 644 ~/.ssh/known_hosts
+
+  script:
+    - git clone https://github.com/prashantv/gostub.git gostub-9fc4f583f114a72d2d711ec21d8963c7dfda9a8c
+    - cd gostub-9fc4f583f114a72d2d711ec21d8963c7dfda9a8c/
+    - git checkout 9fc4f583f114a72d2d711ec21d8963c7dfda9a8c
+    - cd ..
+    - tar zcf gostub-9fc4f583f114a72d2d711ec21d8963c7dfda9a8c.tar.gz gostub-9fc4f583f114a72d2d711ec21d8963c7dfda9a8c/
+    - ./build_all.sh f30 f31 f32 f33 f34 f35 f36 f37 f38
