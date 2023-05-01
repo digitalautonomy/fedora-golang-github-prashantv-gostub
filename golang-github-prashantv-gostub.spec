@@ -13,6 +13,7 @@ gostub is a library to make stubbing in unit tests easy.}
 %global godocs          README.md
 
 Name:           %{goname}
+Version:        0
 Release:        1%{?dist}
 Summary:        stubbing library for golang unit tests
 
